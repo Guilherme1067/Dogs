@@ -4,6 +4,10 @@
     align-items: stretch;
 }
 
+.single.form {
+    margin: 1rem 0;
+}
+
 .textarea {
     display: block;
     width: 100%;
