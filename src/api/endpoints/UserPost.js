@@ -6,7 +6,6 @@ const UserPost = () => {
     const [email, setEmail] = useState('');
 
     const handleSubmit = (event) => {
-        console.log(email,username,password)
         event.preventDefault();
 
         fetch('https://dogsapi.origamid.dev/json/api/user', {
@@ -21,10 +20,8 @@ const UserPost = () => {
                 
             })
         }).then(response => {
-            console.log(response);
             return response.json();
         }).then( json => {
-            console.log(json)
         })
     }
 

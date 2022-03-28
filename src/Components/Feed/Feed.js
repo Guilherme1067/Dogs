@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import FeedModal from './FeedModal'
 import FeedPhotos from './FeedPhotos'
+import PropTypes from 'prop-types';
 
 const Feed = ({user}) => {
   const [modalPhoto, setModalPhoto] = useState(null);
@@ -9,17 +10,13 @@ const Feed = ({user}) => {
 
   useEffect(() => {
     const infinitScroll = () => {
-      console.log('infinite feed',infinite)
       if(infinite){
-        console.log('entrou no scroll', infinite)
         let wait = false;
         const scroll = window.scrollY;
         const height = document.body.offsetHeight - window.innerHeight;
         if(scroll > height * .75 && !wait){
           setPages((pages) => [...pages, pages.length + 1])
           wait = true;
-          console.log(wait)
-          console.log('teste')
           setTimeout(() => {
             wait = false
           },500)
@@ -50,6 +47,17 @@ const Feed = ({user}) => {
         /> )}
     </div>
   )
+}
+
+Feed.defaultProps = {
+ user: 0
+}
+
+Feed.propTypes = {
+ user: PropTypes.oneOfType([
+   PropTypes.string.isRequired, 
+   PropTypes.number.isRequired
+  ])
 }
 
 export default Feed
