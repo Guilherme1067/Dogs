@@ -1,33 +1,32 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { GET_PHOTO } from '../../api';
-import useFetch from '../../hooks/useFetch';
 import Error from '../Helper/Error';
 import Head from '../Helper/Head';
 import Loading from '../Helper/Loading';
 import PhotoContent from './PhotoContent';
+import { fetchPhoto } from '../../store/photo';
 
 const Photo = () => {
-  const {id} = useParams();
-  const {request, data, loading, error } = useFetch()
+  const { id } = useParams();
+  const { loading, error, data } = useSelector((state) => state.photo);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const {url} = GET_PHOTO(id);
-    request(url)
+    dispatch(fetchPhoto(id));
+  }, [dispatch, id]);
 
-  },[request, id])
-  
-  if(error) return <Error error={error} />
-  if(loading) return <Loading />
+  if (error) return <Error error={error} />;
+  if (loading) return <Loading />;
 
-  if(data)
-  return(
-    <section className='container mainContainer'>
-      <Head title={data.photo.title}/>
-      <PhotoContent single={true} data={data}/>
-    </section>
-  )
+  if (data)
+    return (
+      <section className="container mainContainer">
+        <Head title={data.photo.title} />
+        <PhotoContent single={true} />
+      </section>
+    );
   else return null;
-}
+};
 
 export default Photo;
